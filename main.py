@@ -8,8 +8,6 @@ import os
 
 from feature_extractors.gender_classifier import GenderClassifier
 
-from caption_generator import CaptionGenerator
-
 import argparse
 import yaml
 import json
@@ -24,8 +22,6 @@ class MusicFeatureExtractor:
 		self.config_file_path = config_file_path
 
 		self.configs = self.load_configs(self.config_file_path)
-
-		self.enable_caption_generation = self.configs["pipeline"]["enable_caption_generation"]
 
 		self.input_file_path = self.configs["files"]["input"]
 		self.output_file_path = self.configs["files"]["output"]
@@ -117,9 +113,6 @@ class MusicFeatureExtractor:
 		else:
 			self.feature_extractors.insert(FeatureExtractors.KEY_CLASSIFIER.value, None)
 
-		if (self.enable_caption_generation):
-			self.caption_generator = CaptionGenerator(self.configs["caption_generator"]["api_key"], self.configs["caption_generator"]["model_id"])
-
 	def load_configs(self, file_path):
 		configs = {}
 		with open(file_path, 'r') as f:
@@ -152,10 +145,6 @@ class MusicFeatureExtractor:
 				self.feature_extractors[extractor].save_extracted_features(features_dir)
 			audio_tags[self.feature_extractors[extractor].get_tag_type()] = feature_tags
 
-		if (self.enable_caption_generation):
-			prompt = self.caption_generator.create_prompt(audio_tags)
-			caption = self.caption_generator.generate_caption(prompt)
-			audio_tags["caption"] = caption
 		audio_tags["location"] = snippet_path
 		return audio_tags
 

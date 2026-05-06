@@ -1,23 +1,16 @@
-from spleeter.separator import Separator
-from spleeter.audio.adapter import AudioAdapter
+import demucs.separate
 import os
 import shutil
 import time
 from pydub import AudioSegment
 
-separator = Separator('spleeter:4stems')
-
-audio_loader = AudioAdapter.default()
 
 def separate_audio(audio_path, output_dir="/proj/mirflex/files/temp/"):
-
-    waveform, _ = audio_loader.load(audio_path)
-
     # Perform the separation :
-    separator.separate_to_file(audio_path, output_dir)
+    demucs.separate.main(['--out', f'{output_dir}', f'{audio_path}'])
 
     # Move files from the subdirectory to the specified output_dir
-    subdirectory = os.path.join(output_dir, os.path.basename(audio_path)[:-4])  # Extract file name without extension
+    subdirectory = os.path.join(output_dir, 'htdemucs', os.path.splitext(os.path.basename(audio_path))[0])  # Extract file name without extension
     for stem in ["vocals", "drums", "bass", "other"]:
         stem_file_wav = os.path.join(subdirectory, f"{stem}.wav")
         stem_file_mp3 = os.path.join(output_dir, f"{stem}.mp3")

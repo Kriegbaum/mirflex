@@ -7,7 +7,7 @@ The repository has been tested with the following environment set up. To recreat
 ### Base
 
 * Ubuntu 22.04
-* Python 3.8
+* Python 3.12
 
 ### Additional installations (in order of installation)
 
@@ -19,7 +19,6 @@ pip install git+https://github.com/CPJKU/madmom
 sudo apt-get install portaudio19-dev
 pip install pyaudio
 pip install git+https://github.com/mjhydri/BeatNet
-pip install openai
 
 pip install torch
 pip install pandas
@@ -34,7 +33,8 @@ pip install soundfile
 pip install tensorflow==2.7.0
 
 conda install -c conda-forge ffmpeg libsndfile
-pip install spleeter
+pip install demucs
+pip install torchcodec
 pip install httpx==0.26.0
 
 pip install pydub

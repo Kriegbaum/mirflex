@@ -39,8 +39,8 @@ CHORD_DTYPE = [('root', np.int),
                ('intervals', np.int, (12,)),
                ('is_major',np.bool)]
 
-CHORD_ANN_DTYPE = [('start', np.float),
-                   ('end', np.float),
+CHORD_ANN_DTYPE = [('start', float),
+                   ('end', float),
                    ('chord', CHORD_DTYPE)]
 
 NO_CHORD = (-1, -1, np.zeros(12, dtype=np.int), False)
